@@ -1,0 +1,113 @@
+---
+openapi: 3.0.1
+info:
+  title: Geolocations API
+  version: v1
+  description: API endpoints for managing geolocations
+components:
+  schemas:
+    geolocation:
+      type: object
+      properties:
+        id:
+          type: integer
+        ip:
+          type: string
+        ip_type:
+          type: string
+        continent_code:
+          type: string
+        continent_name:
+          type: string
+        country_code:
+          type: string
+        country_name:
+          type: string
+        region_code:
+          type: string
+        region_name:
+          type: string
+        city:
+          type: string
+        zip:
+          type: string
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - ip
+paths:
+  "/api/v1/geolocations/{id}":
+    get:
+      summary: Retrieves a geolocation
+      tags:
+      - Geolocations
+      description: Returns a single geolocation by ID
+      parameters:
+      - name: id
+        in: path
+        description: Geolocation ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: geolocation found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/geolocation"
+        '404':
+          description: geolocation not found
+    delete:
+      summary: Deletes a geolocation
+      tags:
+      - Geolocations
+      description: Deletes a specific geolocation
+      parameters:
+      - name: id
+        in: path
+        description: Geolocation ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: geolocation deleted
+  "/api/v1/geolocations":
+    post:
+      summary: Creates a geolocation
+      tags:
+      - Geolocations
+      description: Creates a new geolocation from IP or URL
+      parameters: []
+      responses:
+        '201':
+          description: geolocation created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: IP address or URL to geolocate
+              required:
+              - url
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com

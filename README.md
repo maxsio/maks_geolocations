@@ -1,24 +1,46 @@
-# README
+# Rails Geolocation App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Ruby on Rails application that uses IPStack for geolocation services, containerized with Docker.
 
-Things you may want to cover:
+## Environment Setup
 
-* Ruby version
+1. Copy the environment template:
 
-* System dependencies
+```
+cp .env.template .env
+```
 
-* Configuration
+2. Update your IPStack API key in .env:
 
-* Database creation
+```
+IPSTACK_ACCESS_KEY=your_api_key_here
+```
 
-* Database initialization
+## Running with Docker
 
-* How to run the test suite
+1. Build and start containers in detached mode:
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+docker compose up --build -d
+```
 
-* Deployment instructions
+2. Access the application Rswag documentation:
+- http://localhost:3000/api-docs
 
-* ...
+## Stopping the Application
+
+```
+docker compose down
+```
+
+## Running the tests
+
+```
+docker compose exec web bin/bundle exec rspec
+```
+
+## Architecture
+
+- Ruby 3.3.2
+- Rails (latest)
+- PostgreSQL
